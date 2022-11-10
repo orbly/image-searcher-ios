@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ImageViewController.swift
 //  Interesnee-iOS
 //
 //  Created by Артем on 10.11.2022.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ImageViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
 
-    private let itemsPerRow: CGFloat = 3
+    private let itemsPerRow: CGFloat = 2
     private let sectionInserts = UIEdgeInsets(top: 20,
                                               left: 20,
                                               bottom: 20,
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 }
 
 //MARK: - Flow Layout Delegate
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension ImageViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
@@ -53,7 +53,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 }
 
 //MARK: - Collection View Data Source
-extension ViewController: UICollectionViewDataSource {
+extension ImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 100
     }
@@ -70,7 +70,7 @@ extension ViewController: UICollectionViewDataSource {
 }
 
 //MARK: - Collection View Delegate
-extension ViewController: UICollectionViewDelegate {
+extension ImageViewController: UICollectionViewDelegate {
 
 }
 
