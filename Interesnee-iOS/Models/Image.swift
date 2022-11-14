@@ -9,9 +9,9 @@ import Foundation
 
 struct Image: Decodable {
     let position: Int
-    let thumbnail: URL
-    let link: URL
-    let original: URL
+    let thumbnail: String
+    let link: String
+    let original: String
 }
 
 struct ImageData: Decodable {

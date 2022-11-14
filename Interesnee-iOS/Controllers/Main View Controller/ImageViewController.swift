@@ -12,6 +12,9 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
 
+    private let network = NetworkManager()
+    private var images: [Image] = []
+
     private let itemsPerRow: CGFloat = 2
     private let sectionInserts = UIEdgeInsets(top: 20,
                                               left: 20,
@@ -23,6 +26,19 @@ class ImageViewController: UIViewController {
 
         collectionView.dataSource = self
         collectionView.delegate = self
+
+        network.fetchImages(query: "Apple", pageNumber: 0) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let imageData):
+                self.images = imageData.imagesResults
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
 }
@@ -55,7 +71,7 @@ extension ImageViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - Collection View Data Source
 extension ImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return images.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

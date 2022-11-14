@@ -9,6 +9,8 @@ import UIKit
 
 class MainViewCollectionViewCell: UICollectionViewCell {
 
+    static let identifier = "PhotoCell"
+
     @IBOutlet weak var imageView: UIImageView!
     
     private var cornerRadius: CGFloat = 10.0
@@ -35,6 +37,10 @@ class MainViewCollectionViewCell: UICollectionViewCell {
             roundedRect: bounds,
             cornerRadius: cornerRadius
         ).cgPath
+    }
+
+    func configure() {
+        
     }
     
 }

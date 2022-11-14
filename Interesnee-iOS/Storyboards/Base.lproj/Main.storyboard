@@ -124,8 +124,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Detail View" id="nIg-hB-oaV">
-                        <barButtonItem key="leftBarButtonItem" title="Prev" id="nI4-oN-oPF"/>
-                        <barButtonItem key="rightBarButtonItem" title="Next " id="vPR-lt-rjV"/>
+                        <barButtonItem key="leftBarButtonItem" title="Prev" id="nI4-oN-oPF">
+                            <color key="tintColor" systemColor="linkColor"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Next " id="vPR-lt-rjV">
+                            <color key="tintColor" systemColor="linkColor"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="fullImageView" destination="4IH-yn-i6B" id="0xD-da-wo0"/>
