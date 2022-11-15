@@ -1,0 +1,6 @@
+framework module Pods_Interesnee_iOS_Interesnee_iOSUITests {
+  umbrella header "Pods-Interesnee-iOS-Interesnee-iOSUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

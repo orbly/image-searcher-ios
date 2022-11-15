@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MainViewCollectionViewCell: UICollectionViewCell {
+
+    static let identifier = "PhotoCell"
 
     @IBOutlet weak var imageView: UIImageView!
     
@@ -35,6 +38,16 @@ class MainViewCollectionViewCell: UICollectionViewCell {
             roundedRect: bounds,
             cornerRadius: cornerRadius
         ).cgPath
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+
+    func configure(with viewModel: ImageViewModel?) {
+        guard let viewModel = viewModel else { return }
+        imageView.kf.setImage(with: viewModel.thumbnail, options: [.transition(.fade(0.3))])
     }
     
 }

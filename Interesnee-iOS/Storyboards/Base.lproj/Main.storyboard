@@ -13,14 +13,14 @@
         <!--Image Searcher-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Interesnee_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ImageViewController" customModule="Interesnee_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="BPi-nI-gPx">
+                            <searchBar contentMode="redraw" placeholder="Search for images" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BPi-nI-gPx">
                                 <rect key="frame" x="0.0" y="143" width="390" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="9Ys-pj-2Jg"/>
                                 </connections>
@@ -55,16 +55,21 @@
                                         </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="imageView" destination="jXF-bX-e7s" id="iFt-VD-7vO"/>
-                                            <segue destination="tuJ-rw-Ryp" kind="presentation" id="4nG-6v-m7Q"/>
+                                            <segue destination="tuJ-rw-Ryp" kind="presentation" identifier="ShowDetail" id="4nG-6v-m7Q"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="GMZ-Tc-xcf">
+                                <rect key="frame" x="176.66666666666666" y="403.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="BPi-nI-gPx" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="6aB-Xd-ExK"/>
+                            <constraint firstItem="GMZ-Tc-xcf" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ebs-1n-qz9"/>
+                            <constraint firstItem="GMZ-Tc-xcf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FXl-XN-dKT"/>
                             <constraint firstItem="BPi-nI-gPx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="QRT-cU-bhC"/>
                             <constraint firstItem="gEW-zi-M0i" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RVi-Lp-lFR"/>
                             <constraint firstItem="BPi-nI-gPx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bMF-Cw-xSr"/>
@@ -75,6 +80,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Image Searcher" id="mMK-Xr-uik"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="GMZ-Tc-xcf" id="Kpm-18-qRg"/>
                         <outlet property="collectionView" destination="gEW-zi-M0i" id="9Ez-9e-Axp"/>
                         <outlet property="searchBar" destination="BPi-nI-gPx" id="Nfz-lz-gIN"/>
                     </connections>
@@ -92,10 +98,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4IH-yn-i6B">
-                                <rect key="frame" x="20" y="156" width="350" height="475"/>
+                                <rect key="frame" x="10" y="66" width="370" height="590.33333333333337"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="veT-8u-5Tp">
-                                <rect key="frame" x="95" y="681" width="200" height="34.333333333333371"/>
+                                <rect key="frame" x="95" y="686.33333333333337" width="200" height="34.333333333333371"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="pUh-sY-hzG"/>
                                 </constraints>
@@ -115,18 +121,27 @@
                         <viewLayoutGuide key="safeArea" id="GlP-nU-Ca6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="GlP-nU-Ca6" firstAttribute="trailing" secondItem="4IH-yn-i6B" secondAttribute="trailing" constant="20" id="57z-fQ-oFr"/>
-                            <constraint firstItem="veT-8u-5Tp" firstAttribute="centerX" secondItem="kPJ-9U-4m2" secondAttribute="centerX" id="9Sm-zM-O5V"/>
-                            <constraint firstItem="4IH-yn-i6B" firstAttribute="centerY" secondItem="kPJ-9U-4m2" secondAttribute="centerY" id="CrD-ll-nPG"/>
-                            <constraint firstItem="4IH-yn-i6B" firstAttribute="centerX" secondItem="kPJ-9U-4m2" secondAttribute="centerX" id="GNh-X5-Ix4"/>
-                            <constraint firstItem="4IH-yn-i6B" firstAttribute="leading" secondItem="GlP-nU-Ca6" secondAttribute="leading" constant="20" id="Gh8-Ih-NDP"/>
-                            <constraint firstItem="4IH-yn-i6B" firstAttribute="top" secondItem="GlP-nU-Ca6" secondAttribute="top" constant="100" id="P1d-8I-m4b"/>
-                            <constraint firstItem="veT-8u-5Tp" firstAttribute="top" secondItem="4IH-yn-i6B" secondAttribute="bottom" constant="50" id="jiw-R8-ulc"/>
+                            <constraint firstItem="veT-8u-5Tp" firstAttribute="centerX" secondItem="kPJ-9U-4m2" secondAttribute="centerX" id="26m-pM-G4R"/>
+                            <constraint firstItem="GlP-nU-Ca6" firstAttribute="trailing" secondItem="4IH-yn-i6B" secondAttribute="trailing" constant="10" id="57z-fQ-oFr"/>
+                            <constraint firstItem="4IH-yn-i6B" firstAttribute="leading" secondItem="GlP-nU-Ca6" secondAttribute="leading" constant="10" id="Gh8-Ih-NDP"/>
+                            <constraint firstItem="4IH-yn-i6B" firstAttribute="top" secondItem="GlP-nU-Ca6" secondAttribute="top" constant="10" id="P1d-8I-m4b"/>
+                            <constraint firstItem="veT-8u-5Tp" firstAttribute="top" secondItem="4IH-yn-i6B" secondAttribute="bottom" constant="30" id="X3l-Ga-3wg"/>
+                            <constraint firstItem="4IH-yn-i6B" firstAttribute="height" secondItem="kPJ-9U-4m2" secondAttribute="height" multiplier="0.75" id="lHx-B2-P60"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Detail View" id="nIg-hB-oaV">
-                        <barButtonItem key="leftBarButtonItem" title="Previous" id="nI4-oN-oPF"/>
-                        <barButtonItem key="rightBarButtonItem" title="Next " id="vPR-lt-rjV"/>
+                        <barButtonItem key="leftBarButtonItem" title="Prev" id="nI4-oN-oPF">
+                            <color key="tintColor" systemColor="linkColor"/>
+                            <connections>
+                                <action selector="prevButtonPressed:" destination="t2q-os-nEO" id="f8N-2s-psC"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Next " id="vPR-lt-rjV">
+                            <color key="tintColor" systemColor="linkColor"/>
+                            <connections>
+                                <action selector="nextButtonPressed:" destination="t2q-os-nEO" id="lVJ-tY-y7f"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="fullImageView" destination="4IH-yn-i6B" id="0xD-da-wo0"/>
@@ -159,7 +174,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="j43-5R-Ls2" firstAttribute="top" secondItem="wAO-ap-jzy" secondAttribute="top" id="1EM-05-xIb"/>
-                            <constraint firstItem="wAO-ap-jzy" firstAttribute="bottom" secondItem="j43-5R-Ls2" secondAttribute="bottom" id="Tr3-5J-YNM"/>
+                            <constraint firstAttribute="bottom" secondItem="j43-5R-Ls2" secondAttribute="bottom" id="Tr3-5J-YNM"/>
                             <constraint firstItem="wAO-ap-jzy" firstAttribute="trailing" secondItem="j43-5R-Ls2" secondAttribute="trailing" id="aCb-bI-V8f"/>
                             <constraint firstItem="j43-5R-Ls2" firstAttribute="leading" secondItem="wAO-ap-jzy" secondAttribute="leading" id="pjf-w0-kuo"/>
                         </constraints>
