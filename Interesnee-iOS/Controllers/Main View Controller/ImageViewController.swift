@@ -11,9 +11,10 @@ class ImageViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
-
-    private let network = NetworkManager()
-    private var images: [Image] = []
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    private var viewModel: ImageDataViewModel!
+    private var pageNumber: Int = 0
 
     private let itemsPerRow: CGFloat = 2
     private let sectionInserts = UIEdgeInsets(top: 20,
@@ -24,21 +25,12 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.dataSource = self
 
-        network.fetchImages(query: "Apple", pageNumber: 0) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let imageData):
-                self.images = imageData.imagesResults
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        viewModel = ImageDataViewModel()
+
+        activityIndicator.isHidden = true
     }
 
 }
@@ -71,22 +63,82 @@ extension ImageViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - Collection View Data Source
 extension ImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return viewModel.numberOfImages
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as? MainViewCollectionViewCell else { fatalError("Cannot find MainViewCollectionViewCell") }
 
-        cell.backgroundColor = .white
+        cell.configure(with: viewModel.imageViewModel(for: indexPath))
 
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.numberOfImages - 10 {
+            pageNumber += 1
+            viewModel.search(with: searchBar.text, pageNumber: pageNumber) {
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
 
 }
 
-//MARK: - Collection View Delegate
 extension ImageViewController: UICollectionViewDelegate {
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.selectCell(atIndex: indexPath.row)
+    }
 }
 
+//MARK: - Search Bar Delegate
+extension ImageViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        activityIndicator.isHidden = false
+        collectionView.isHidden = true
+        activityIndicator.startAnimating()
+
+        searchBar.resignFirstResponder()
+
+        viewModel.clearResult()
+        viewModel.search(with: searchBar.text, pageNumber: 0) {
+            DispatchQueue.main.async {
+                self.collectionView.isHidden = false
+                self.collectionView.reloadData()
+            }
+            self.activityIndicator.stopAnimating()
+        }
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+
+        viewModel.clearResult()
+        searchBar.text = ""
+
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+}
+
+//MARK: - Prepare Segue
+extension ImageViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let navC = segue.destination as? UINavigationController,
+              let detailVC = navC.viewControllers.first as? DetailImageViewController
+        else {
+            fatalError("Detail controller not found!")
+        }
+
+//        guard let selectedIndex = collectionView.indexPathsForSelectedItems?.last?.row else {
+//            return
+//        }
+//        print(selectedIndex)
+        
+        detailVC.viewModel = viewModel
+//        detailVC.selectedIndex = selectedIndex
+    }
+}

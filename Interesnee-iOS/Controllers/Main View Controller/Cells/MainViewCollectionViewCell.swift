@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MainViewCollectionViewCell: UICollectionViewCell {
 
@@ -39,8 +40,14 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         ).cgPath
     }
 
-    func configure() {
-        
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+
+    func configure(with viewModel: ImageViewModel?) {
+        guard let viewModel = viewModel else { return }
+        imageView.kf.setImage(with: viewModel.thumbnail, options: [.transition(.fade(0.3))])
     }
     
 }
