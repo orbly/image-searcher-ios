@@ -18,9 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="BPi-nI-gPx">
+                            <searchBar contentMode="redraw" placeholder="Search for images" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BPi-nI-gPx">
                                 <rect key="frame" x="0.0" y="143" width="390" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="9Ys-pj-2Jg"/>
                                 </connections>
@@ -55,16 +55,21 @@
                                         </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="imageView" destination="jXF-bX-e7s" id="iFt-VD-7vO"/>
-                                            <segue destination="tuJ-rw-Ryp" kind="presentation" id="4nG-6v-m7Q"/>
+                                            <segue destination="tuJ-rw-Ryp" kind="presentation" identifier="ShowDetail" id="4nG-6v-m7Q"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="GMZ-Tc-xcf">
+                                <rect key="frame" x="176.66666666666666" y="403.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="BPi-nI-gPx" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="6aB-Xd-ExK"/>
+                            <constraint firstItem="GMZ-Tc-xcf" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ebs-1n-qz9"/>
+                            <constraint firstItem="GMZ-Tc-xcf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FXl-XN-dKT"/>
                             <constraint firstItem="BPi-nI-gPx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="QRT-cU-bhC"/>
                             <constraint firstItem="gEW-zi-M0i" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RVi-Lp-lFR"/>
                             <constraint firstItem="BPi-nI-gPx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bMF-Cw-xSr"/>
@@ -75,6 +80,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Image Searcher" id="mMK-Xr-uik"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="GMZ-Tc-xcf" id="Kpm-18-qRg"/>
                         <outlet property="collectionView" destination="gEW-zi-M0i" id="9Ez-9e-Axp"/>
                         <outlet property="searchBar" destination="BPi-nI-gPx" id="Nfz-lz-gIN"/>
                     </connections>
@@ -126,9 +132,15 @@
                     <navigationItem key="navigationItem" title="Detail View" id="nIg-hB-oaV">
                         <barButtonItem key="leftBarButtonItem" title="Prev" id="nI4-oN-oPF">
                             <color key="tintColor" systemColor="linkColor"/>
+                            <connections>
+                                <action selector="prevButtonPressed:" destination="t2q-os-nEO" id="f8N-2s-psC"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next " id="vPR-lt-rjV">
                             <color key="tintColor" systemColor="linkColor"/>
+                            <connections>
+                                <action selector="nextButtonPressed:" destination="t2q-os-nEO" id="lVJ-tY-y7f"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
