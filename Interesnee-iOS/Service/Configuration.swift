@@ -8,6 +8,7 @@
 import Moya
 
 enum API {
+    static private let apiKey: String = "1da593812a1e7ba4678d3799f3e3cee3504a8e7f7a1733ec2101865bc2bf4d5e"
     case search(query: String, pageNumber: Int)
 }
 
@@ -34,6 +35,7 @@ extension API: TargetType {
             return .requestParameters(
                 parameters: [
                     "q" : query,
+                    "api_key" : API.apiKey,
                     "tbm" : "isch",
                     "ijn" : pageNumber
                 ],
